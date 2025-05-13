@@ -115,6 +115,38 @@ Testing blockchain connection...
    - Submit the form and approve the transaction
    - View your logged waste in the list below
 
+4. Register as a Recycler:
+   - Connect your wallet when prompted
+   - Select "Recycler" role
+   - You'll be prompted to register if not already registered
+   - Approve the transaction in MetaMask
+
+5. Process waste items:
+   - As a Recycler, you'll see unprocessed waste items in the dashboard
+   - Click the "Process" button for an item you want to recycle
+   - In the popup modal, enter the recycling method used (e.g., "Disassembled components and melted precious metals")
+   - Submit the form and approve the transaction
+   - The item will be marked as processed and moved to the "Processed E-Waste Items" section
+
+## Updating Smart Contracts
+
+If you make changes to the smart contracts (such as the recent addition of the recycling method), follow these steps to update the deployment:
+
+1. Update your contracts in the `/contracts` directory (you'll need to redeploy if you've changed any contract structure)
+
+2. Recompile and migrate the contracts:
+   ```bash
+   truffle compile
+   truffle migrate --reset --network development
+   ```
+   Note: The `--reset` flag forces the contracts to be redeployed, which is necessary when changing contract structure.
+
+3. After migration, note the new contract addresses from the console output
+
+4. Update the frontend config.js file with the new contract addresses (manually or using the update-config.js script)
+
+5. Restart the frontend application
+
 ## Common Issues
 
 ### MetaMask Connection Issues
@@ -142,3 +174,18 @@ If transactions fail:
 - Check gas price and limit in MetaMask settings
 - Make sure your account has the correct role for the action
 - Check the browser console for specific error messages
+
+## Changelog
+
+### Version 1.1
+- Added recycling method tracking feature:
+  - Recyclers can now specify how e-waste items were recycled
+  - Recycling methods are stored on the blockchain
+  - Added a new section to display processed items with their recycling methods
+  - Updated contract structure to include recycling method data
+  - Modified recycler dashboard interface to collect recycling information
+
+### Version 1.0
+- Initial release with basic e-waste tracking functionality
+- Support for Producer and Recycler roles
+- Waste item logging and processing

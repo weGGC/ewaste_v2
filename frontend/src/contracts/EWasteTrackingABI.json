@@ -24,6 +24,12 @@
         "internalType": "address",
         "name": "recycler",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "recyclingMethod",
+        "type": "string"
       }
     ],
     "name": "WasteProcessed",
@@ -181,6 +187,11 @@
         "internalType": "bool",
         "name": "isProcessed",
         "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "recyclingMethod",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -249,6 +260,11 @@
         "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_recyclingMethod",
+        "type": "string"
       }
     ],
     "name": "markAsProcessed",
@@ -364,6 +380,11 @@
         "internalType": "bool",
         "name": "isProcessed",
         "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "recyclingMethod",
+        "type": "string"
       }
     ],
     "stateMutability": "view",

@@ -63,7 +63,8 @@ contract RecyclingManagement {
             uint256 deadline,
             , // loggedAt - unused
             , // producer - unused
-            bool isProcessed
+            bool isProcessed,
+            // recyclingMethod - unused
         ) = eWasteTracker.getWasteItem(_wasteId);
         
         require(id != 0, "Waste item does not exist.");
@@ -118,7 +119,7 @@ contract RecyclingManagement {
             recycledWaste[_wasteId].completedAt = block.timestamp;
             
             // Mark as processed in eWasteTracking contract
-            eWasteTracker.markAsProcessed(_wasteId);
+            eWasteTracker.markAsProcessed(_wasteId, recycledWaste[_wasteId].method);
             
             emit RecyclingCompleted(_wasteId, msg.sender, block.timestamp);
         } else {

@@ -17,6 +17,7 @@ contract eWasteTracking {
         uint256 loggedAt;
         address producer;
         bool isProcessed;
+        string recyclingMethod;  // How the item was recycled
     }
 
     mapping(uint => eWasteItem) public wasteRecords;
@@ -33,7 +34,7 @@ contract eWasteTracking {
         uint256 deadline, 
         address indexed producer
     );
-    event WasteProcessed(uint id, address indexed recycler);
+    event WasteProcessed(uint id, address indexed recycler, string recyclingMethod);
     event WasteUpdated(uint id, string field, string newValue);
 
     constructor(address _userManagementAddress) {
@@ -79,7 +80,8 @@ contract eWasteTracking {
             deadline: _deadline,
             loggedAt: block.timestamp,
             producer: msg.sender,
-            isProcessed: false
+            isProcessed: false,
+            recyclingMethod: ""
         });
         
         emit WasteLogged(
@@ -94,12 +96,14 @@ contract eWasteTracking {
         );
     }
 
-    function markAsProcessed(uint _id) external onlyRecycler {
+    function markAsProcessed(uint _id, string memory _recyclingMethod) external onlyRecycler {
         require(wasteRecords[_id].id != 0, "Waste item does not exist.");
         require(!wasteRecords[_id].isProcessed, "Waste item already processed.");
+        require(bytes(_recyclingMethod).length > 0, "Recycling method must be specified.");
         
         wasteRecords[_id].isProcessed = true;
-        emit WasteProcessed(_id, msg.sender);
+        wasteRecords[_id].recyclingMethod = _recyclingMethod;
+        emit WasteProcessed(_id, msg.sender, _recyclingMethod);
     }
 
     function updateWasteDetails(
@@ -136,7 +140,8 @@ contract eWasteTracking {
         uint256 deadline,
         uint256 loggedAt,
         address producer,
-        bool isProcessed
+        bool isProcessed,
+        string memory recyclingMethod
     ) {
         eWasteItem memory item = wasteRecords[_id];
         require(item.id != 0, "Waste item does not exist.");
@@ -151,7 +156,8 @@ contract eWasteTracking {
             item.deadline,
             item.loggedAt,
             item.producer,
-            item.isProcessed
+            item.isProcessed,
+            item.recyclingMethod
         );
     }
     

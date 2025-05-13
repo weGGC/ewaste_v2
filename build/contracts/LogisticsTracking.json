@@ -1868,7 +1868,7 @@
                 }
               ]
             },
-            "name": "abi_decode_tuple_t_enum$_Role_$1952_fromMemory",
+            "name": "abi_decode_tuple_t_enum$_Role_$1956_fromMemory",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -4379,7 +4379,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_contract$_UserManagement_$2497__to_t_address__fromStack_reversed",
+            "name": "abi_encode_tuple_t_contract$_UserManagement_$2501__to_t_address__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -7916,7 +7916,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_t_address(offset) -> value\n    {\n        value := calldataload(offset)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_t_string(offset, end) -> array\n    {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(array, array) }\n        let _1 := calldataload(offset)\n        let _2 := 0xffffffffffffffff\n        if gt(_1, _2) { panic_error_0x41() }\n        let memPtr := mload(64)\n        let newFreePtr := add(add(memPtr, and(add(_1, 0x1f), not(31))), 0x20)\n        if or(gt(newFreePtr, _2), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _1)\n        if gt(add(add(offset, _1), 0x20), end) { revert(array, array) }\n        calldatacopy(add(memPtr, 0x20), add(offset, 0x20), _1)\n        mstore(add(add(memPtr, _1), 0x20), array)\n        array := memPtr\n    }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := abi_decode_t_address(headStart)\n    }\n    function abi_decode_tuple_t_enum$_Role_$1952_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_t_enum$_Role(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_enum$_ShipmentStatus_$609(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_t_enum$_Role(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_uint256t_addresst_addresst_string_memory_ptr(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(value1, value1) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_t_address(add(headStart, 32))\n        value2 := abi_decode_t_address(add(headStart, 64))\n        let offset := calldataload(add(headStart, 96))\n        if gt(offset, 0xffffffffffffffff) { revert(value3, value3) }\n        value3 := abi_decode_t_string(add(headStart, offset), dataEnd)\n    }\n    function abi_decode_tuple_t_uint256t_enum$_ShipmentStatus_$609t_string_memory_ptr(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n        let value := calldataload(add(headStart, 32))\n        validator_revert_t_enum$_Role(value)\n        value1 := value\n        let offset := calldataload(add(headStart, 64))\n        if gt(offset, 0xffffffffffffffff) { revert(value2, value2) }\n        value2 := abi_decode_t_string(add(headStart, offset), dataEnd)\n    }\n    function abi_encode_t_enum$_ShipmentStatus(value, pos)\n    {\n        if iszero(lt(value, 5))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x21)\n            revert(0, 0x24)\n        }\n        mstore(pos, value)\n    }\n    function abi_encode_t_string(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        let i := end\n        for { } lt(i, length) { i := add(i, 0x20) }\n        {\n            let _1 := 0x20\n            mstore(add(add(pos, i), _1), mload(add(add(value, i), _1)))\n        }\n        if gt(i, length)\n        {\n            mstore(add(add(pos, length), 0x20), end)\n        }\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_array$_t_uint256_$dyn_memory_ptr__to_t_array$_t_uint256_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        pos := add(headStart, 64)\n        let srcPtr := add(value0, _1)\n        let i := tail\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, mload(srcPtr))\n            pos := add(pos, _1)\n            srcPtr := add(srcPtr, _1)\n        }\n        tail := pos\n    }\n    function abi_encode_tuple_t_contract$_UserManagement_$2497__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_stringliteral_5b3648163154fb760e7bfab73a8d3c0d1efb54006af2548f86d13c959b397deb__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 54)\n        mstore(add(headStart, 64), \"Only the assigned transporter ca\")\n        mstore(add(headStart, 96), \"n update this shipment\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_76846f1c0a9c286d7cd3f91e39d150d7c3d6cdc40a1c6ee5612fdb117652aeb7__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Shipment must be in transit befo\")\n        mstore(add(headStart, 96), \"re delivery\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7b0e48df4b4d489e3d2eb80c494104ce67e12fa01b7bc09642a018d1c20bab39__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 63)\n        mstore(add(headStart, 64), \"Unauthorized: Only logistics pro\")\n        mstore(add(headStart, 96), \"viders can perform this action.\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7ca1d40e426886d78eac470b6df9bcdb8f32756f4632f18e5e83eba5aa98f3be__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 74)\n        mstore(add(headStart, 64), \"Unauthorized: Only parties invol\")\n        mstore(add(headStart, 96), \"ved in this shipment can view it\")\n        mstore(add(headStart, 128), \"s details.\")\n        tail := add(headStart, 160)\n    }\n    function abi_encode_tuple_t_stringliteral_93ae3c6c6e6b02491679e7256ac60914ba6ab90b34933426ce5cfaa1cfce2e1c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 19)\n        mstore(add(headStart, 64), \"Invalid shipment ID\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_bec849d4852015319af8b1befd225c0a6a5a48f13f0b3038206dd8c46c5deb2e__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 34)\n        mstore(add(headStart, 64), \"Cannot cancel a delivered shipme\")\n        mstore(add(headStart, 96), \"nt\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256__to_t_uint256_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_enum$_ShipmentStatus_$609_t_address_t_string_memory_ptr_t_string_memory_ptr_t_uint256_t_uint256_t_address_t_address__to_t_uint256_t_uint256_t_uint8_t_address_t_string_memory_ptr_t_string_memory_ptr_t_uint256_t_uint256_t_address_t_address__fromStack_reversed(headStart, value9, value8, value7, value6, value5, value4, value3, value2, value1, value0) -> tail\n    {\n        let _1 := 320\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        abi_encode_t_enum$_ShipmentStatus(value2, add(headStart, 64))\n        let _2 := sub(shl(160, 1), 1)\n        mstore(add(headStart, 96), and(value3, _2))\n        mstore(add(headStart, 128), _1)\n        let tail_1 := abi_encode_t_string(value4, add(headStart, _1))\n        mstore(add(headStart, 160), sub(tail_1, headStart))\n        tail := abi_encode_t_string(value5, tail_1)\n        mstore(add(headStart, 192), value6)\n        mstore(add(headStart, 224), value7)\n        mstore(add(headStart, 256), and(value8, _2))\n        mstore(add(headStart, 288), and(value9, _2))\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_enum$_ShipmentStatus_$609_t_string_memory_ptr_t_uint256__to_t_uint256_t_uint256_t_uint8_t_string_memory_ptr_t_uint256__fromStack_reversed(headStart, value4, value3, value2, value1, value0) -> tail\n    {\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        abi_encode_t_enum$_ShipmentStatus(value2, add(headStart, 64))\n        mstore(add(headStart, 96), 160)\n        tail := abi_encode_t_string(value3, add(headStart, 160))\n        mstore(add(headStart, 128), value4)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_uint256__to_t_uint256_t_uint256_t_uint256__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 96)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), value2)\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := div(data, 2)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function increment_t_uint256(value) -> ret\n    {\n        if eq(value, not(0))\n        {\n            mstore(ret, shl(224, 0x4e487b71))\n            mstore(4, 0x11)\n            revert(ret, 0x24)\n        }\n        ret := add(value, 1)\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function validator_revert_t_enum$_Role(value)\n    {\n        if iszero(lt(value, 5)) { revert(0, 0) }\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_t_address(offset) -> value\n    {\n        value := calldataload(offset)\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_t_string(offset, end) -> array\n    {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(array, array) }\n        let _1 := calldataload(offset)\n        let _2 := 0xffffffffffffffff\n        if gt(_1, _2) { panic_error_0x41() }\n        let memPtr := mload(64)\n        let newFreePtr := add(add(memPtr, and(add(_1, 0x1f), not(31))), 0x20)\n        if or(gt(newFreePtr, _2), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _1)\n        if gt(add(add(offset, _1), 0x20), end) { revert(array, array) }\n        calldatacopy(add(memPtr, 0x20), add(offset, 0x20), _1)\n        mstore(add(add(memPtr, _1), 0x20), array)\n        array := memPtr\n    }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := abi_decode_t_address(headStart)\n    }\n    function abi_decode_tuple_t_enum$_Role_$1956_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_t_enum$_Role(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_enum$_ShipmentStatus_$609(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_t_enum$_Role(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_decode_tuple_t_uint256t_addresst_addresst_string_memory_ptr(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(value1, value1) }\n        value0 := calldataload(headStart)\n        value1 := abi_decode_t_address(add(headStart, 32))\n        value2 := abi_decode_t_address(add(headStart, 64))\n        let offset := calldataload(add(headStart, 96))\n        if gt(offset, 0xffffffffffffffff) { revert(value3, value3) }\n        value3 := abi_decode_t_string(add(headStart, offset), dataEnd)\n    }\n    function abi_decode_tuple_t_uint256t_enum$_ShipmentStatus_$609t_string_memory_ptr(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n        let value := calldataload(add(headStart, 32))\n        validator_revert_t_enum$_Role(value)\n        value1 := value\n        let offset := calldataload(add(headStart, 64))\n        if gt(offset, 0xffffffffffffffff) { revert(value2, value2) }\n        value2 := abi_decode_t_string(add(headStart, offset), dataEnd)\n    }\n    function abi_encode_t_enum$_ShipmentStatus(value, pos)\n    {\n        if iszero(lt(value, 5))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x21)\n            revert(0, 0x24)\n        }\n        mstore(pos, value)\n    }\n    function abi_encode_t_string(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        let i := end\n        for { } lt(i, length) { i := add(i, 0x20) }\n        {\n            let _1 := 0x20\n            mstore(add(add(pos, i), _1), mload(add(add(value, i), _1)))\n        }\n        if gt(i, length)\n        {\n            mstore(add(add(pos, length), 0x20), end)\n        }\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_array$_t_uint256_$dyn_memory_ptr__to_t_array$_t_uint256_$dyn_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        let _1 := 32\n        let tail_1 := add(headStart, _1)\n        mstore(headStart, _1)\n        let pos := tail_1\n        let length := mload(value0)\n        mstore(tail_1, length)\n        pos := add(headStart, 64)\n        let srcPtr := add(value0, _1)\n        let i := tail\n        for { } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, mload(srcPtr))\n            pos := add(pos, _1)\n            srcPtr := add(srcPtr, _1)\n        }\n        tail := pos\n    }\n    function abi_encode_tuple_t_contract$_UserManagement_$2501__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_stringliteral_5b3648163154fb760e7bfab73a8d3c0d1efb54006af2548f86d13c959b397deb__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 54)\n        mstore(add(headStart, 64), \"Only the assigned transporter ca\")\n        mstore(add(headStart, 96), \"n update this shipment\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_76846f1c0a9c286d7cd3f91e39d150d7c3d6cdc40a1c6ee5612fdb117652aeb7__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"Shipment must be in transit befo\")\n        mstore(add(headStart, 96), \"re delivery\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7b0e48df4b4d489e3d2eb80c494104ce67e12fa01b7bc09642a018d1c20bab39__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 63)\n        mstore(add(headStart, 64), \"Unauthorized: Only logistics pro\")\n        mstore(add(headStart, 96), \"viders can perform this action.\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7ca1d40e426886d78eac470b6df9bcdb8f32756f4632f18e5e83eba5aa98f3be__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 74)\n        mstore(add(headStart, 64), \"Unauthorized: Only parties invol\")\n        mstore(add(headStart, 96), \"ved in this shipment can view it\")\n        mstore(add(headStart, 128), \"s details.\")\n        tail := add(headStart, 160)\n    }\n    function abi_encode_tuple_t_stringliteral_93ae3c6c6e6b02491679e7256ac60914ba6ab90b34933426ce5cfaa1cfce2e1c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 19)\n        mstore(add(headStart, 64), \"Invalid shipment ID\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_bec849d4852015319af8b1befd225c0a6a5a48f13f0b3038206dd8c46c5deb2e__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 34)\n        mstore(add(headStart, 64), \"Cannot cancel a delivered shipme\")\n        mstore(add(headStart, 96), \"nt\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256__to_t_uint256_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_enum$_ShipmentStatus_$609_t_address_t_string_memory_ptr_t_string_memory_ptr_t_uint256_t_uint256_t_address_t_address__to_t_uint256_t_uint256_t_uint8_t_address_t_string_memory_ptr_t_string_memory_ptr_t_uint256_t_uint256_t_address_t_address__fromStack_reversed(headStart, value9, value8, value7, value6, value5, value4, value3, value2, value1, value0) -> tail\n    {\n        let _1 := 320\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        abi_encode_t_enum$_ShipmentStatus(value2, add(headStart, 64))\n        let _2 := sub(shl(160, 1), 1)\n        mstore(add(headStart, 96), and(value3, _2))\n        mstore(add(headStart, 128), _1)\n        let tail_1 := abi_encode_t_string(value4, add(headStart, _1))\n        mstore(add(headStart, 160), sub(tail_1, headStart))\n        tail := abi_encode_t_string(value5, tail_1)\n        mstore(add(headStart, 192), value6)\n        mstore(add(headStart, 224), value7)\n        mstore(add(headStart, 256), and(value8, _2))\n        mstore(add(headStart, 288), and(value9, _2))\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_enum$_ShipmentStatus_$609_t_string_memory_ptr_t_uint256__to_t_uint256_t_uint256_t_uint8_t_string_memory_ptr_t_uint256__fromStack_reversed(headStart, value4, value3, value2, value1, value0) -> tail\n    {\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        abi_encode_t_enum$_ShipmentStatus(value2, add(headStart, 64))\n        mstore(add(headStart, 96), 160)\n        tail := abi_encode_t_string(value3, add(headStart, 160))\n        mstore(add(headStart, 128), value4)\n    }\n    function abi_encode_tuple_t_uint256_t_uint256_t_uint256__to_t_uint256_t_uint256_t_uint256__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 96)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), value2)\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := div(data, 2)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function increment_t_uint256(value) -> ret\n    {\n        if eq(value, not(0))\n        {\n            mstore(ret, shl(224, 0x4e487b71))\n            mstore(4, 0x11)\n            revert(ret, 0x24)\n        }\n        ret := add(value, 1)\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function validator_revert_t_enum$_Role(value)\n    {\n        if iszero(lt(value, 5)) { revert(0, 0) }\n    }\n}",
       "id": 6,
       "language": "Yul",
       "name": "#utility.yul"
@@ -7933,7 +7933,7 @@
         1257
       ],
       "UserManagement": [
-        2497
+        2501
       ]
     },
     "id": 1258,
@@ -7957,7 +7957,7 @@
         "id": 600,
         "nodeType": "ImportDirective",
         "scope": 1258,
-        "sourceUnit": 2498,
+        "sourceUnit": 2502,
         "src": "60:30:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7987,7 +7987,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_UserManagement_$2497",
+              "typeIdentifier": "t_contract$_UserManagement_$2501",
               "typeString": "contract UserManagement"
             },
             "typeName": {
@@ -7997,13 +7997,13 @@
                 "id": 601,
                 "name": "UserManagement",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 2497,
+                "referencedDeclaration": 2501,
                 "src": "128:14:1"
               },
-              "referencedDeclaration": 2497,
+              "referencedDeclaration": 2501,
               "src": "128:14:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_UserManagement_$2497",
+                "typeIdentifier": "t_contract$_UserManagement_$2501",
                 "typeString": "contract UserManagement"
               }
             },
@@ -8928,7 +8928,7 @@
                       "referencedDeclaration": 603,
                       "src": "1219:14:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_UserManagement_$2497",
+                        "typeIdentifier": "t_contract$_UserManagement_$2501",
                         "typeString": "contract UserManagement"
                       }
                     },
@@ -8960,10 +8960,10 @@
                         "name": "UserManagement",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2497,
+                        "referencedDeclaration": 2501,
                         "src": "1236:14:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_UserManagement_$2497_$",
+                          "typeIdentifier": "t_type$_t_contract$_UserManagement_$2501_$",
                           "typeString": "type(contract UserManagement)"
                         }
                       },
@@ -8978,13 +8978,13 @@
                       "src": "1236:38:1",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_UserManagement_$2497",
+                        "typeIdentifier": "t_contract$_UserManagement_$2501",
                         "typeString": "contract UserManagement"
                       }
                     },
                     "src": "1219:55:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_UserManagement_$2497",
+                      "typeIdentifier": "t_contract$_UserManagement_$2501",
                       "typeString": "contract UserManagement"
                     }
                   },
@@ -9104,7 +9104,7 @@
                     "arguments": [
                       {
                         "commonType": {
-                          "typeIdentifier": "t_enum$_Role_$1952",
+                          "typeIdentifier": "t_enum$_Role_$1956",
                           "typeString": "enum UserManagement.Role"
                         },
                         "id": 706,
@@ -9156,7 +9156,7 @@
                               "referencedDeclaration": 603,
                               "src": "1378:14:1",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_UserManagement_$2497",
+                                "typeIdentifier": "t_contract$_UserManagement_$2501",
                                 "typeString": "contract UserManagement"
                               }
                             },
@@ -9167,10 +9167,10 @@
                             "lValueRequested": false,
                             "memberName": "getUserRole",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 2312,
+                            "referencedDeclaration": 2316,
                             "src": "1378:26:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_enum$_Role_$1952_$",
+                              "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_enum$_Role_$1956_$",
                               "typeString": "function (address) view external returns (enum UserManagement.Role)"
                             }
                           },
@@ -9185,7 +9185,7 @@
                           "src": "1378:38:1",
                           "tryCall": false,
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Role_$1952",
+                            "typeIdentifier": "t_enum$_Role_$1956",
                             "typeString": "enum UserManagement.Role"
                           }
                         },
@@ -9198,10 +9198,10 @@
                               "name": "UserManagement",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 2497,
+                              "referencedDeclaration": 2501,
                               "src": "1420:14:1",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_type$_t_contract$_UserManagement_$2497_$",
+                                "typeIdentifier": "t_type$_t_contract$_UserManagement_$2501_$",
                                 "typeString": "type(contract UserManagement)"
                               }
                             },
@@ -9212,10 +9212,10 @@
                             "lValueRequested": false,
                             "memberName": "Role",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1952,
+                            "referencedDeclaration": 1956,
                             "src": "1420:19:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_enum$_Role_$1952_$",
+                              "typeIdentifier": "t_type$_t_enum$_Role_$1956_$",
                               "typeString": "type(enum UserManagement.Role)"
                             }
                           },
@@ -9228,7 +9228,7 @@
                           "nodeType": "MemberAccess",
                           "src": "1420:29:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Role_$1952",
+                            "typeIdentifier": "t_enum$_Role_$1956",
                             "typeString": "enum UserManagement.Role"
                           }
                         },
@@ -15981,12 +15981,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xB4517f739e5cc90Fa598dc2a73058b397110D79C",
-      "transactionHash": "0x2a5db39511da4789c9c84468d22ce7ba4da926b4a971c64286f7b5a0a0399200"
+      "address": "0xDbAE829D1C52Bdc9Fa6F34A96C2576D9A7f5a5A4",
+      "transactionHash": "0xdd97bb29a7f1bf4a9e6111a3b234c2857727043324d217f7dcd68985bc306268"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-05-11T23:13:54.956Z",
+  "updatedAt": "2025-05-13T12:52:03.350Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

@@ -23,12 +23,18 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
   // Modal form state
   const [formValues, setFormValues] = useState({});
   
+  // Recycling method state
+  const [recyclingMethod, setRecyclingMethod] = useState('');
+  
   // Stats
   const [stats, setStats] = useState({
     total: 0,
     pending: 0,
     processed: 0
   });
+  
+  // Processed items
+  const [processedItems, setProcessedItems] = useState([]);
   
   // Contract instances
   const [userContract, setUserContract] = useState(null);
@@ -115,7 +121,8 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
               deadline: new Date(details.deadline * 1000).toLocaleString(),
               loggedAt: new Date(details.loggedAt * 1000).toLocaleString(),
               producer: details.producer,
-              isProcessed: details.isProcessed
+              isProcessed: details.isProcessed,
+              recyclingMethod: details.recyclingMethod || ''
             };
           }
           return null;
@@ -126,20 +133,28 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
       const filteredItems = wasteDetails.filter(item => item !== null);
       setWasteItems(filteredItems);
       
-      // Update stats
+      // Update stats and processed items
       const allItems = await Promise.all(
         wasteIds.map(async (id) => {
           const details = await wasteContractInstance.methods.getWasteItem(id).call();
           return {
             id: details.id,
-            isProcessed: details.isProcessed
+            wasteType: details.wasteType,
+            origin: details.origin,
+            quantity: details.quantity,
+            isProcessed: details.isProcessed,
+            recyclingMethod: details.recyclingMethod || ''
           };
         })
       );
       
+      // Set processed items for display
+      const processed = allItems.filter(item => item.isProcessed);
+      setProcessedItems(processed);
+      
       setStats({
         total: allItems.length,
-        processed: allItems.filter(item => item.isProcessed).length,
+        processed: processed.length,
         pending: allItems.filter(item => !item.isProcessed).length
       });
     } catch (error) {
@@ -147,10 +162,28 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
     }
   };
 
-  const markAsProcessed = async (wasteId) => {
+  const openRecyclingModal = (wasteId) => {
+    setRecyclingMethod('');
+    setModalData({
+      title: 'Process Waste Item',
+      message: 'Please specify how this item will be recycled:',
+      fields: [
+        { name: 'recyclingMethod', label: 'Recycling Method', type: 'text', value: '' }
+      ],
+      wasteId: wasteId
+    });
+    setShowModal(true);
+  };
+
+  const markAsProcessed = async (wasteId, method) => {
     try {
+      if (!method || method.trim() === '') {
+        alert('Please specify how the item was recycled');
+        return;
+      }
+      
       setLoading(true);
-      await wasteContract.methods.markAsProcessed(wasteId).send({ from: account });
+      await wasteContract.methods.markAsProcessed(wasteId, method).send({ from: account });
       // Reload waste items after marking as processed
       await loadAvailableWasteItems(wasteContract);
       setLoading(false);
@@ -212,7 +245,14 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
   };
   
   const handleModalSubmit = () => {
-    registerAsRecycler(formValues);
+    if (modalData.title === 'Recycler Registration') {
+      registerAsRecycler(formValues);
+    } else if (modalData.title === 'Process Waste Item') {
+      const method = formValues.recyclingMethod || '';
+      markAsProcessed(modalData.wasteId, method);
+      setFormValues({});
+      setShowModal(false);
+    }
   };
 
   if (loading) {
@@ -322,12 +362,42 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
                         <td>
                           <button 
                             className="btn btn-success" 
-                            onClick={() => markAsProcessed(item.id)}
+                            onClick={() => openRecyclingModal(item.id)}
                             disabled={loading}
                           >
                             <span role="img" aria-label="process">✅</span> Process
                           </button>
                         </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            
+            <div className="card">
+              <h2>Processed E-Waste Items</h2>
+              {processedItems.length === 0 ? (
+                <p>No items have been processed yet.</p>
+              ) : (
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Type</th>
+                      <th>Origin</th>
+                      <th>Quantity</th>
+                      <th>Recycling Method</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {processedItems.map((item) => (
+                      <tr key={item.id} style={{ borderBottom: '1px solid #ddd' }}>
+                        <td>{item.id}</td>
+                        <td>{item.wasteType}</td>
+                        <td>{item.origin}</td>
+                        <td>{web3.utils.fromWei(item.quantity.toString(), 'ether')}</td>
+                        <td>{item.recyclingMethod}</td>
                       </tr>
                     ))}
                   </tbody>

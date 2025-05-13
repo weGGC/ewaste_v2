@@ -87,7 +87,8 @@ contract ComplianceAudit {
             uint256 deadline,
             , // loggedAt - unused
             address producer,
-            bool isProcessed
+            bool isProcessed,
+            // recyclingMethod - unused
         ) = eWasteTracker.getWasteItem(_wasteId);
         
         require(wasteId > 0, "Waste item does not exist.");
@@ -181,7 +182,8 @@ contract ComplianceAudit {
             , // deadline - unused
             , // loggedAt - unused
             , // producer - unused
-            bool isProcessed
+            bool isProcessed,
+            // recyclingMethod - unused
         ) = eWasteTracker.getWasteItem(_wasteId);
         
         require(isProcessed, "Cannot issue certificate: waste not fully processed");
