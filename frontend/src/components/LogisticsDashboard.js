@@ -629,7 +629,7 @@ const LogisticsDashboard = ({ web3, account, onLogout }) => {
                             <td>{item.id}</td>
                             <td>{item.wasteType}</td>
                             <td>{item.origin}</td>
-                            <td>{item.quantity}</td>
+                            <td>{web3.utils.fromWei(item.quantity.toString(), 'ether')}</td>
                             <td>
                               <button 
                                 className="btn" 
