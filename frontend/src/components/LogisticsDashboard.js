@@ -19,7 +19,6 @@ const LogisticsDashboard = ({ web3, account, onLogout }) => {
   const [shipmentForm, setShipmentForm] = useState({
     wasteId: '',
     producer: '',
-    receiver: '',
     trackingCode: '',
     location: '',
     notes: ''
@@ -164,7 +163,7 @@ const LogisticsDashboard = ({ web3, account, onLogout }) => {
         createdAt: Date.now(),
         updatedAt: Date.now(),
         producer: shipmentForm.producer,
-        receiver: shipmentForm.receiver,
+        receiver: '', // Left empty as it's not a mandatory field
         notes: shipmentForm.notes
       };
       
@@ -186,7 +185,6 @@ const LogisticsDashboard = ({ web3, account, onLogout }) => {
       setShipmentForm({
         wasteId: '',
         producer: '',
-        receiver: '',
         trackingCode: '',
         location: '',
         notes: ''
@@ -552,17 +550,6 @@ const LogisticsDashboard = ({ web3, account, onLogout }) => {
                     />
                   </div>
                   
-                  <div className="form-control">
-                    <label>Receiver Address (Recycler)</label>
-                    <input
-                      type="text"
-                      name="receiver"
-                      value={shipmentForm.receiver}
-                      onChange={handleShipmentFormChange}
-                      placeholder="0x..."
-                      required
-                    />
-                  </div>
                   
                   <div className="form-control">
                     <label>Tracking Code</label>

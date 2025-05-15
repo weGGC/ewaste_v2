@@ -30,11 +30,11 @@ contract UserManagement {
     }
 
     function registerUser(string memory _name, Role _role, string memory _contactInfo) external {
-        for (uint i = 0; i < users[msg.sender].length; i++) {
-            if (keccak256(bytes(users[msg.sender][i].name)) == keccak256(bytes(_name)) && users[msg.sender][i].role == _role) {
-                revert("User with this name and role is already registered.");
-            }
+        // Check if user already has any role
+        if (users[msg.sender].length > 0) {
+            revert("Account already registered with a role. Multiple roles are not allowed.");
         }
+        
         uint256 timestamp = block.timestamp;
         users[msg.sender].push(User(_name, _role, true, timestamp, _contactInfo));
         emit UserRegistered(msg.sender, _name, _role, timestamp);
@@ -42,25 +42,29 @@ contract UserManagement {
     
     // Admin function to register a user with a different address
     function registerUserWithAddress(address _userAddress, string memory _name, Role _role, string memory _contactInfo) external onlyAdmin {
-        for (uint i = 0; i < users[_userAddress].length; i++) {
-            if (keccak256(bytes(users[_userAddress][i].name)) == keccak256(bytes(_name)) && users[_userAddress][i].role == _role) {
-                revert("User with this name and role is already registered.");
-            }
+        // Check if user already has any role
+        if (users[_userAddress].length > 0) {
+            revert("Account already registered with a role. Multiple roles are not allowed.");
         }
+        
         uint256 timestamp = block.timestamp;
         users[_userAddress].push(User(_name, _role, true, timestamp, _contactInfo));
         emit UserRegistered(_userAddress, _name, _role, timestamp);
     }
 
     function loginUser(string memory _role) external view returns (string memory, Role, string memory) {
-        Role roleEnum = getRoleFromString(_role);
-        for (uint i = 0; i < users[msg.sender].length; i++) {
-            if (users[msg.sender][i].role == roleEnum) {
-                User memory user = users[msg.sender][i];
-                return (user.name, user.role, user.contactInfo);
-            }
+        if (users[msg.sender].length == 0) {
+            revert("User not registered.");
         }
-        revert("No user with this role found.");
+        
+        Role roleEnum = getRoleFromString(_role);
+        User memory user = users[msg.sender][0];
+        
+        if (user.role != roleEnum) {
+            revert("User is not registered with this role.");
+        }
+        
+        return (user.name, user.role, user.contactInfo);
     }
 
     function getUserCount(address _user) external view returns (uint) {
@@ -68,21 +72,25 @@ contract UserManagement {
     }
 
     function getUserRole(address _user) public view returns (Role) {
-        for (uint i = 0; i < users[_user].length; i++) {
-            return users[_user][i].role; // Returns the first role found for the user
+        if (users[_user].length > 0) {
+            return users[_user][0].role; // Returns the only role for the user
         }
         return Role.None; // Return None if no role is found
     }
 
     function getUserByRole(address _user, string memory _role) external view returns (string memory, Role, string memory) {
-        Role roleEnum = getRoleFromString(_role);
-        for (uint i = 0; i < users[_user].length; i++) {
-            if (users[_user][i].role == roleEnum) {
-                User memory user = users[_user][i];
-                return (user.name, user.role, user.contactInfo);
-            }
+        if (users[_user].length == 0) {
+            revert("User not registered.");
         }
-        revert("No user with this role found.");
+        
+        Role roleEnum = getRoleFromString(_role);
+        User memory user = users[_user][0];
+        
+        if (user.role != roleEnum) {
+            revert("User is not registered with this role.");
+        }
+        
+        return (user.name, user.role, user.contactInfo);
     }
 
     function changeAdmin(address _newAdmin) external onlyAdmin {

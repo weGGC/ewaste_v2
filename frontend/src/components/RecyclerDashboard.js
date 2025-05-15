@@ -166,9 +166,9 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
     setRecyclingMethod('');
     setModalData({
       title: 'Process Waste Item',
-      message: 'Please specify how this item will be recycled:',
+      message: 'Please describe how this item will be recycled:',
       fields: [
-        { name: 'recyclingMethod', label: 'Recycling Method', type: 'text', value: '' }
+        { name: 'recyclingMethod', label: 'Recycling Method (please provide details)', type: 'textarea', value: '' }
       ],
       wasteId: wasteId
     });
@@ -277,20 +277,32 @@ const RecyclerDashboard = ({ web3, account, onLogout }) => {
         message={modalData.message}
         onClose={() => setShowModal(false)}
         primaryAction={handleModalSubmit}
-        primaryLabel="Register"
+        primaryLabel={modalData.title === 'Recycler Registration' ? 'Register' : 'Process'}
         secondaryAction={() => setShowModal(false)}
       >
         {modalData.fields && modalData.fields.map((field) => (
           <div className="form-control" key={field.name}>
             <label htmlFor={field.name}>{field.label}</label>
-            <input
-              type={field.type || 'text'}
-              id={field.name}
-              name={field.name}
-              value={formValues[field.name] || ''}
-              onChange={handleModalInputChange}
-              required
-            />
+            {field.type === 'textarea' ? (
+              <textarea
+                id={field.name}
+                name={field.name}
+                value={formValues[field.name] || ''}
+                onChange={handleModalInputChange}
+                required
+                rows={4}
+                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+              />
+            ) : (
+              <input
+                type={field.type || 'text'}
+                id={field.name}
+                name={field.name}
+                value={formValues[field.name] || ''}
+                onChange={handleModalInputChange}
+                required
+              />
+            )}
           </div>
         ))}
       </ModalDialog>
